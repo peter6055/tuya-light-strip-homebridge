@@ -39,3 +39,11 @@ https://m.tb.cn/h.5mpecxX?tk=epnBW56D6sZ CZ0001 「电视氛围灯同步声光�
 ## Development
 1. You can connect IDE to the synology nas using FTP.
 2. After editing file, you can restart homebridge to see the changes.
+
+
+## Acknowledgements
+- 照明协议工具 https://developer.tuya.com/cn/docs/iot/lampProtocol?id=Kaljp68841zwl
+- 开发 Homebridge 硬件驱动 https://developer.tuya.com/cn/docs/iot/add-category?id=Kavr81qw3t4p8
+- 如何安装涂鸦 Homebridge 插件 https://developer.tuya.com/cn/docs/iot/Tuya_Homebridge_Plugin?id=Kamcldj76lhzt
+- Tuya Homebridge Plugin https://github.com/tuya/tuya-homebridge
+- Homebridge API https://developers.homebridge.io/
