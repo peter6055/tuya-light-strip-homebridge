@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="6e101a66-5b30-493a-a2da-f41ec151d03b" name="ds.tw.elogy.org" url="">
+        <fileTransfer rootFolder="/docker/homebridge/tuya-light-strip" host="ds.tw.elogy.org" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
