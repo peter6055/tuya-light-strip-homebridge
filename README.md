@@ -33,6 +33,11 @@ https://m.tb.cn/h.5mpecxX?tk=epnBW56D6sZ CZ0001 「电视氛围灯同步声光�
     /docker/homebridge/tuya-light-strip/lib/strip_light_accessory.js:/var/lib/homebridge/node_modules/homebridge-tuya-platform/lib/strip_light_accessory.js
     /docker/homebridge/tuya-light-strip/index.js:/var/lib/homebridge/node_modules/homebridge-tuya-platform/index.js
     ```
+5. Go to the docker container terminal and run the following command to install the dependencies
+    ```
+    cd /var/lib/homebridge/node_modules/homebridge-tuya-platform
+    npm install @tuya/tuya-panel-protocols
+    ```
 5. Restart the docker container.
 
 
