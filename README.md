@@ -2,6 +2,11 @@
 This is a Homebridge plugin for the Tuya Strip Light. It is based on the Tuya Homebridge Plugin.
 The instructions for is based on install homebrdige on docker on a Synology NAS.
 
+## Update
+### 2023-12-22 v1.0.1
+- Fixed issue: When you adjust the colour and brightness on the left panel, the mode on the right panel will not reset to "Colour" mode. You will need to click the switch twice to turn on the music(tv) mode.
+- Fixed issue: If there are error message when adding the device/gateway to homekit, please comment the following line in index.js, and remove the comment after adding the device/gateway to homekit. This was because the UUID conflicts.
+
 ## Product
 https://m.tb.cn/h.5mpecxX?tk=epnBW56D6sZ CZ0001 「电视氛围灯同步声光电视机氛围灯带随屏同步变色背景智能同步灯带」
 
@@ -14,14 +19,7 @@ https://m.tb.cn/h.5mpecxX?tk=epnBW56D6sZ CZ0001 「电视氛围灯同步声光�
 
 ## Known Issues
 1. You are not able to adjust white light (Saturation isn't return from homekit) on Homekit using this plugin.
-2. When you adjust the colour and brightness on the left panel, the mode on the right panel will not reset to "Colour" mode. You will need to click the switch twice to turn on the music(tv) mode
-3. If there are error message when adding the device/gateway to homekit, please comment the following line in index.js, and remove the comment after adding the device/gateway to homekit. This was because the UUID conflicts.
-    ```
-    // var deviceData = new DataUtil().getSubService(device.status)
-    // deviceAccessory = new StripLightModeSwitchAccessory(this, homebridgeAccessory, device, deviceData);
-    // this.accessories.set(uuid + "1", deviceAccessory.homebridgeAccessory);
-    // this.deviceAccessories.set(uuid + "1", deviceAccessory);
-    ```
+
 
 ## Installation
 1. Install Tuya Homebridge Plugin as per instructions: https://developer.tuya.com/en/docs/iot/Tuya_Homebridge_Plugin?id=Kamcldj76lhzt

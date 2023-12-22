@@ -65,7 +65,7 @@ class TuyaPlatform {
                 config.options.accessKey,
                 this.log,
             );
-            this.tuyaOpenApi = api;
+            this.xx = api;
             //login before everything start
             await api.login(config.options.username, config.options.password);
             //init Mqtt service and register some Listener
@@ -192,10 +192,14 @@ class TuyaPlatform {
                 this.deviceAccessories.set(uuid, deviceAccessory);
 
                 // adjust light mode: music or colour
+                // create a new accessory with new uuid
+                const uuid1 = this.api.hap.uuid.generate(device.id + 1);
+                const homebridgeAccessory1 = this.accessories.get(uuid);
+
                 var deviceData = new DataUtil().getSubService(device.status)
-                deviceAccessory = new StripLightModeSwitchAccessory(this, homebridgeAccessory, device, deviceData);
-                this.accessories.set(uuid + "1", deviceAccessory.homebridgeAccessory);
-                this.deviceAccessories.set(uuid + "1", deviceAccessory);
+                deviceAccessory = new StripLightModeSwitchAccessory(this, homebridgeAccessory1, device, deviceData);
+                this.accessories.set(uuid1, deviceAccessory.homebridgeAccessory1);
+                this.deviceAccessories.set(uuid1, deviceAccessory);
 
                 break;
             default:
@@ -224,8 +228,22 @@ class TuyaPlatform {
 
     //refresh Accessorie status
     async refreshDeviceStates(message) {
-        const uuid = this.api.hap.uuid.generate(message.devId);
+
+        var uuid;
+
+        console.log(message.status[0].code)
+        // console.log(JSON.parse(message.status))
+
+        // if message contain "work_mode" means it is a strip light mode switch accessory, so device id + 1 to update switch instead
+        // otherwise, update light accessory
+        if(message.status[0].code === 'work_mode'){
+            uuid = this.api.hap.uuid.generate(message.devId + 1);
+        } else {
+            uuid = this.api.hap.uuid.generate(message.devId);
+        }
+
         const deviceAccessorie = this.deviceAccessories.get(uuid);
+
         if (deviceAccessorie) {
             deviceAccessorie.updateState(message);
         }
