@@ -23,6 +23,9 @@ https://m.tb.cn/h.5mpecxX?tk=epnBW56D6sZ CZ0001 「电视氛围灯同步声光�
 
 
 ## Installation
+!! UPDATE 20240310 !!
+Please change `/var/lib/homebridge` to your homebridge root folder on the docker
+-----------
 1. Install Tuya Homebridge Plugin as per instructions: https://developer.tuya.com/en/docs/iot/Tuya_Homebridge_Plugin?id=Kamcldj76lhzt
 2. Make a new share folder called "docker" on Synology Nas.
 3. Make a new folder inside folder "docker" called "homebridge" and upload the entire folder from this repo to the new folder.
