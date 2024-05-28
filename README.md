@@ -27,25 +27,35 @@ https://m.tb.cn/h.5mpecxX?tk=epnBW56D6sZ CZ0001 「电视氛围灯同步声光�
 
 ## Installation
 1. Install Tuya Homebridge Plugin as per instructions: https://developer.tuya.com/en/docs/iot/Tuya_Homebridge_Plugin?id=Kamcldj76lhzt
+   <br><br>
 2. Make a new share folder called "docker" on Synology Nas.
+   <br><br>
 3. Make a new folder inside folder "docker" called "homebridge" and upload the entire folder from this repo to the new folder.
-4. Remove the original config file of "Tuya Homebridge Plugin" first (in this tutorial we rename it instead remove it)
-    ```
-    cd /var/lib/homebridge/node_modules/homebridge-tuya-platform
+   <br><br>
+4. Check your Homebridge location in docker <br>
+   Go to homekit dashboard, scroll to the top of the logs. Find "Creating default config.json" and copy the /...../homebridge/ location.
+   <img alt="image4.png" src="image4.png" width="700"/>
+   <br><br>
+5. Remove the original config file of "Tuya Homebridge Plugin" first (in this tutorial we rename it instead remove it)
+   Replace the {YOUR_HOME_BRIDGE_LOCATION} with the location you copied in step 4.
+   ```
+    cd {YOUR_HOME_BRIDGE_LOCATION}/node_modules/homebridge-tuya-platform
     mv index.js index.js.backup
     ```
-4. Configure the volume mapping in the docker container as follows and keeps the permission as READ and WRITE
+6. Configure the volume mapping in the docker container as follows and keeps the permission as READ and WRITE<br>
+   Replace the {YOUR_HOME_BRIDGE_LOCATION} with the location you copied in step 4.
     ```
-    /docker/homebridge/tuya-light-strip-main/lib/strip_light_mode_switch_accessory.js:/var/lib/homebridge/node_modules/homebridge-tuya-platform/lib/strip_light_mode_switch_accessory.js
-    /docker/homebridge/tuya-light-strip-main/lib/strip_light_accessory.js:/var/lib/homebridge/node_modules/homebridge-tuya-platform/lib/strip_light_accessory.js
-    /docker/homebridge/tuya-light-strip-main/index.js:/var/lib/homebridge/node_modules/homebridge-tuya-platform/index.js
+    /docker/homebridge/tuya-light-strip-main/lib/strip_light_mode_switch_accessory.js:{YOUR_HOME_BRIDGE_LOCATION}/node_modules/homebridge-tuya-platform/lib/strip_light_mode_switch_accessory.js
+    /docker/homebridge/tuya-light-strip-main/lib/strip_light_accessory.js:{YOUR_HOME_BRIDGE_LOCATION}/node_modules/homebridge-tuya-platform/lib/strip_light_accessory.js
+    /docker/homebridge/tuya-light-strip-main/index.js:{YOUR_HOME_BRIDGE_LOCATION}/node_modules/homebridge-tuya-platform/index.js
     ```
-5. Go to the docker container terminal and run the following command to install the dependencies
+7. Go to the docker container terminal and run the following command to install the dependencies
     ```
     cd /var/lib/homebridge/node_modules/homebridge-tuya-platform
     npm install @tuya/tuya-panel-protocols
     ```
-5. Restart the docker container.
+   <br><br>
+8. Restart the docker container.
 
 
 ## Development
