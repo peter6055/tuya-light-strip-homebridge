@@ -54,7 +54,6 @@ https://m.tb.cn/h.5mpecxX?tk=epnBW56D6sZ CZ0001 「电视氛围灯同步声光�
     cd /var/lib/homebridge/node_modules/homebridge-tuya-platform
     npm install @tuya/tuya-panel-protocols
     ```
-   <br><br>
 8. Restart the docker container.
 
 
