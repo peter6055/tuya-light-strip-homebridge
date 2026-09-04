@@ -65,7 +65,7 @@ class TuyaPlatform {
                 config.options.accessKey,
                 this.log,
             );
-            this.xx = api;
+            this.tuyaOpenApi = api;
             //login before everything start
             await api.login(config.options.username, config.options.password);
             //init Mqtt service and register some Listener
@@ -135,19 +135,21 @@ class TuyaPlatform {
                 this.deviceAccessories.set(uuid, deviceAccessory);
                 break;
             case 'cz':
-            case 'pc':
-                var deviceData = new DataUtil().getSubService(device.status)
-                deviceAccessory = new OutletAccessory(this, homebridgeAccessory, device, deviceData);
+            case 'pc': {
+                const outletData = new DataUtil().getSubService(device.status);
+                deviceAccessory = new OutletAccessory(this, homebridgeAccessory, device, outletData);
                 this.accessories.set(uuid, deviceAccessory.homebridgeAccessory);
                 this.deviceAccessories.set(uuid, deviceAccessory);
                 break;
+            }
             case 'kg':
-            case 'tdq':
-                var deviceData = new DataUtil().getSubService(device.status)
-                deviceAccessory = new SwitchAccessory(this, homebridgeAccessory, device, deviceData);
+            case 'tdq': {
+                const switchData = new DataUtil().getSubService(device.status);
+                deviceAccessory = new SwitchAccessory(this, homebridgeAccessory, device, switchData);
                 this.accessories.set(uuid, deviceAccessory.homebridgeAccessory);
                 this.deviceAccessories.set(uuid, deviceAccessory);
                 break;
+            }
             case 'fs':
             case 'fskg':
                 deviceAccessory = new Fanv2Accessory(this, homebridgeAccessory, device);
@@ -185,23 +187,20 @@ class TuyaPlatform {
                 this.accessories.set(uuid, deviceAccessory.homebridgeAccessory);
                 this.deviceAccessories.set(uuid, deviceAccessory);
                 break;
-            case 'sxtpmtbq':
-                // Adjust light style : color, brightness
+            case 'sxtpmtbq': {
                 deviceAccessory = new StripLightAccessory(this, homebridgeAccessory, device);
                 this.accessories.set(uuid, deviceAccessory.homebridgeAccessory);
                 this.deviceAccessories.set(uuid, deviceAccessory);
 
-                // adjust light mode: music or colour
-                // create a new accessory with new uuid
                 const uuid1 = this.api.hap.uuid.generate(device.id + 1);
-                const homebridgeAccessory1 = this.accessories.get(uuid);
-
-                var deviceData = new DataUtil().getSubService(device.status)
-                deviceAccessory = new StripLightModeSwitchAccessory(this, homebridgeAccessory1, device, deviceData);
-                this.accessories.set(uuid1, deviceAccessory.homebridgeAccessory1);
+                const modeSwitchAccessory = this.accessories.get(uuid1) || homebridgeAccessory;
+                const stripData = new DataUtil().getSubService(device.status);
+                deviceAccessory = new StripLightModeSwitchAccessory(this, modeSwitchAccessory, device, stripData);
+                this.accessories.set(uuid1, deviceAccessory.homebridgeAccessory);
                 this.deviceAccessories.set(uuid1, deviceAccessory);
 
                 break;
+            }
             default:
                 break;
         }
@@ -228,15 +227,9 @@ class TuyaPlatform {
 
     //refresh Accessorie status
     async refreshDeviceStates(message) {
+        let uuid;
 
-        var uuid;
-
-        console.log(message.status[0].code)
-        // console.log(JSON.parse(message.status))
-
-        // if message contain "work_mode" means it is a strip light mode switch accessory, so device id + 1 to update switch instead
-        // otherwise, update light accessory
-        if(message.status[0].code === 'work_mode'){
+        if (message.status[0].code === 'work_mode') {
             uuid = this.api.hap.uuid.generate(message.devId + 1);
         } else {
             uuid = this.api.hap.uuid.generate(message.devId);
